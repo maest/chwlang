@@ -1,9 +1,9 @@
-{% if latest_article_list %}
+{% if all_categories %}
     <ul>
-    {% for article in latest_article_list %}
-        <li><a href="/reader/{{ article.id }}/">{{ article.headline }}</a></li>
+    {% for category in all_categories %}
+        <li><a href="/reader/category/{{ category.name }}/">{{ category.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No articles are available.</p>
+    <p>No categories are available.</p>
 {% endif %}
