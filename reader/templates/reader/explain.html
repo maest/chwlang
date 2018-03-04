@@ -1,0 +1,12 @@
+{% if entries %}
+    <h2>{{ word }}</h2>
+    <ul>
+    {% spaceless %}
+    {% for entry in entries %}
+        <li>[{{ entry.pinyin }}] <br /> {{ entry.translation|linebreaksbr }}</li>
+    {% endfor %}
+    {% endspaceless %}
+    </ul>
+{% else %}
+    <p>No explanation is available.</p>
+{% endif %}

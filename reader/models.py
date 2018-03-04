@@ -19,3 +19,14 @@ class Article(models.Model):
 
     class Meta:
         ordering = ('headline',)
+
+class DictionaryEntry(models.Model):
+    word = models.CharField(max_length=40)
+    pinyin = models.CharField(max_length=200)
+    translation = models.CharField(max_length=800)
+
+    def __str__(self):
+        return self.word
+
+    class Meta:
+        ordering = ('word',)

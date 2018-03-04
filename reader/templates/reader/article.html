@@ -1,4 +1,19 @@
+<head>
+<style>
+/* mouse over link */
+a {
+	text-decoration:  none;
+	color: black;
+}
+a:hover {
+    color: hotpink;
+}
+
+</style>
+</head>
+<body>
 <h1>{{ article.headline }}</h1>
 <br>
 <br>
-{{ article.body|linebreaks }}
+{{ hlarticle|safe|linebreaks }}
+</body>
