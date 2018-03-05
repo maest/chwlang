@@ -1,6 +1,7 @@
 from django.db import models
 from io import StringIO
 import pandas as pd
+import requests
 
 class Category(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
@@ -26,10 +27,9 @@ class Article(models.Model):
 #    word = models.CharField(max_length=40)
 #    pinyin = models.CharField(max_length=200)
 #    translation = models.CharField(max_length=800)
-
+#
 #    def __str__(self):
 #        return self.word
-import requests
 #
 #    class Meta:
 #        ordering = ('word',)
