@@ -1,5 +1,0 @@
-<article>
-<headline>Headline2</headline>
-<body>Article_body
-</body>
-</article>
