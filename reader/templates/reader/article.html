@@ -15,5 +15,7 @@ a:hover {
 <h1>{{ article.headline }}</h1>
 <br>
 <br>
-{{ hlarticle|safe|linebreaks }}
+{% spaceless %}
+{{ hlarticle|safe|linebreaksbr }}
+{% endspaceless %}
 </body>
