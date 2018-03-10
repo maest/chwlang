@@ -1,0 +1,17 @@
+.segment-holder {
+  cursor: default;
+  text-decoration:none;
+  color:black;
+}
+
+.segment-holder:hover {
+  cursor: default;
+  text-decoration:none;
+  color:hotpink;
+}
+
+.segment-holder:active {
+  cursor: default;
+  text-decoration:none;
+  color:hotpink;
+}

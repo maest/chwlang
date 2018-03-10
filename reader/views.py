@@ -54,20 +54,38 @@ def article_nopopover(request, article_id):
 
 def article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
+    #headline
     d = Dictionary.d
-    cedict = set(d['simplified'])
-    segments = jieba.lcut(article.body)
+    segments = jieba.lcut(article.headline)
     d = d[d['simplified'].isin(segments)]
-    d = d.groupby('simplified').agg({'english':'\n'.join})
+    d['engpinyin'] = d.apply(lambda x:'['+x['pinyin']+']'+'\n'+x['english'], axis=1)
+    d = d.groupby('simplified').agg({'engpinyin':'\n'.join})
     segments = pd.DataFrame(segments, columns=['segment'])
     segments = segments.join(d, on='segment')
     segments = segments.fillna(False)
     segments_dicts = list(segments.T.to_dict().values())
     Segment=collections.namedtuple('Segment', 'segment english')
-    segments = [Segment(s['segment'], s['english']) for s in segments_dicts]
+    segments = [Segment(s['segment'], s['engpinyin']) for s in segments_dicts]
+    segments_headline = segments
+
+    #body
+    d = Dictionary.d
+    segments = jieba.lcut(article.body)
+    d = d[d['simplified'].isin(segments)]
+    d['engpinyin'] = d.apply(lambda x:'['+x['pinyin']+']'+'\n'+x['english'], axis=1)
+    d = d.groupby('simplified').agg({'engpinyin':'\n'.join})
+    segments = pd.DataFrame(segments, columns=['segment'])
+    segments = segments.join(d, on='segment')
+    segments = segments.fillna(False)
+    segments_dicts = list(segments.T.to_dict().values())
+    Segment=collections.namedtuple('Segment', 'segment english')
+    segments = [Segment(s['segment'], s['engpinyin']) for s in segments_dicts]
+    segments_body = segments
+
     context = {
         'article':article,
-        'segments':segments,
+        'segments_body':segments_body,
+        'segments_headline':segments_headline,
         }
     return render(request, 'reader/article_popover.html', context)
 

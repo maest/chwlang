@@ -2,6 +2,7 @@ from django.db import models
 from io import StringIO
 import pandas as pd
 import requests
+import os
 
 class Category(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
@@ -94,9 +95,11 @@ def get_confirm_token(response):
     return None
 
 class Dictionary():
-    csv_text = download_file_from_google_drive('101dprpGjFCSoSLa3bhrMsZwx_bfPrXxW')
-    #csv_text = download_file_from_tinyupload('87655706384298476180')
-    #csv_text = download_file_from_filesystem()
+    if 'YOU_ARE_ON_HEROKU' in os.environ:
+        csv_text = download_file_from_google_drive('101dprpGjFCSoSLa3bhrMsZwx_bfPrXxW')
+        #csv_text = download_file_from_tinyupload('87655706384298476180')
+    else:
+        csv_text = download_file_from_filesystem()
     d = pd.read_csv(StringIO(csv_text),
                     sep='\t',
                     encoding='utf-8')
