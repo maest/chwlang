@@ -1,0 +1,11 @@
+.not-active {
+  cursor: default;
+  text-decoration:none;
+  color:black;
+}
+
+.not-active:hover {
+  cursor: default;
+  text-decoration:none;
+  color:black;
+}

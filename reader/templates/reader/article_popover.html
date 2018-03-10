@@ -1,0 +1,42 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'reader/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'reader/disabled_links.css' %}">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+	<h1>{{ article.headline }}</h1>
+	<br>
+	<br>
+    {% spaceless %}
+	{% for segment in segments %}
+	    {% if segment.english %}
+            <a tabindex="-1" class="not-active" data-toggle="popover" data-placement="bottom" data-html='true' data-trigger='focus' data-content="<h4>{{segment.segment}}</h4>{{segment.english|linebreaksbr}}">{{segment.segment|linebreaksbr}}</a>
+        {% else %}
+            <span>{{segment.segment|linebreaksbr}}</span>
+	    {% endif %}
+	{% endfor %}
+    {% endspaceless %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{% static 'reader/js/bootstrap.min.js' %}"></script>
+    <!-- Enable all popovers -->
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+        });
+    </script>
+  </body>
+</html>

@@ -34,11 +34,25 @@ class Article(models.Model):
 #    class Meta:
 #        ordering = ('word',)
 
-def download_file_from_google_drive(id):
-    URL = "https://docs.google.com/uc?export=download"
+def get_filelink(file_id):
+    from bs4 import BeautifulSoup
+    response = requests.get('http://s000.tinyupload.com/?file_id=' + file_id)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    for x in soup.find_all('a'):
+        if x['href'].startswith('download.php'):
+            full_link = 'http://s000.tinyupload.com/' + x['href']
+            return full_link
+
+def download_file_from_tinyupload(file_id):
+    import time
     session = requests.Session()
-    print("Downloading dictionary csv")
-    response = session.get(URL, params = { 'id' : id }, stream = False)
+    print("Downloading dictionary csv (Tinyupload)")
+    t0 = time.time()
+    file_link = get_filelink(file_id)
+    response = session.get(file_link, stream = False)
+    t1 = time.time()
+    print(t1-t0)
+    print('Getting confirm token')
     token = get_confirm_token(response)
     if token:
         params = { 'id' : id, 'confirm' : token }
@@ -46,6 +60,32 @@ def download_file_from_google_drive(id):
     csv_text = list(response.iter_content(chunk_size=None))[0].decode('utf-8')
     print("Done downloading dictionary csv")
     return csv_text
+
+def download_file_from_google_drive(id):
+    import time
+    URL = "https://docs.google.com/uc?export=download"
+    session = requests.Session()
+    print("Downloading dictionary csv")
+    t0 = time.time()
+    response = session.get(URL, params = { 'id' : id }, stream = False)
+    t1 = time.time()
+    print(t1-t0)
+    print('Getting confirm token')
+    token = get_confirm_token(response)
+    if token:
+        params = { 'id' : id, 'confirm' : token }
+        response = session.get(URL, params = params, stream = False)
+    csv_text = list(response.iter_content(chunk_size=None))[0].decode('utf-8')
+    print("Done downloading dictionary csv")
+    return csv_text
+
+def download_file_from_filesystem():
+    filepath='C:/python projects/christina_website/chwlang/data/cedict/dictionary_df.csv'
+    print('Reading dictionary csv from disk')
+    with open(filepath, 'r', encoding='utf-8') as f:
+        r = f.read()
+    print('Done reading dictionary csv from disk')
+    return r
 
 def get_confirm_token(response):
     for key, value in response.cookies.items():
@@ -55,6 +95,8 @@ def get_confirm_token(response):
 
 class Dictionary():
     csv_text = download_file_from_google_drive('101dprpGjFCSoSLa3bhrMsZwx_bfPrXxW')
+    #csv_text = download_file_from_tinyupload('87655706384298476180')
+    #csv_text = download_file_from_filesystem()
     d = pd.read_csv(StringIO(csv_text),
                     sep='\t',
                     encoding='utf-8')

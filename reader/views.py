@@ -8,6 +8,7 @@ from .models import Dictionary
 
 import jieba
 import collections
+import pandas as pd
 
 def index(request):
     latest_article_list = Article.objects.order_by('headline')[:100]
@@ -32,7 +33,7 @@ def category(request, category_name):
     }
     return render(request, 'reader/category.html', context)
 
-def article(request, article_id):
+def article_nopopover(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     d = Dictionary.d
     cedict = set(d['simplified'])
@@ -51,24 +52,24 @@ def article(request, article_id):
         }
     return render(request, 'reader/article.html', context)
 
-def article_dbdict(request, article_id):
+def article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
-    cedict = [e.word for e in DictionaryEntry.objects.only('word')]
-    cedict = set(cedict)
+    d = Dictionary.d
+    cedict = set(d['simplified'])
     segments = jieba.lcut(article.body)
-    in_cedict = [s in cedict for s in segments]
-    hl_segments = []
-    for i in range(len(segments)):
-        if in_cedict[i]:
-            hl_segments.append('<a href="/reader/explain/{}">{}</a>'.format(segments[i],segments[i]))
-        else:
-            hl_segments.append(segments[i])
-
+    d = d[d['simplified'].isin(segments)]
+    d = d.groupby('simplified').agg({'english':'\n'.join})
+    segments = pd.DataFrame(segments, columns=['segment'])
+    segments = segments.join(d, on='segment')
+    segments = segments.fillna(False)
+    segments_dicts = list(segments.T.to_dict().values())
+    Segment=collections.namedtuple('Segment', 'segment english')
+    segments = [Segment(s['segment'], s['english']) for s in segments_dicts]
     context = {
         'article':article,
-        'hlarticle':"".join(hl_segments),
+        'segments':segments,
         }
-    return render(request, 'reader/article.html', context)
+    return render(request, 'reader/article_popover.html', context)
 
 def explain(request, word):
     DictionaryEntry = collections.namedtuple('Entry', 'pinyin translation')
@@ -91,3 +92,6 @@ def explain_dbdict(request, word):
         'entries':words,
         }
     return render(request, 'reader/explain.html', context)
+
+def bstest(request):
+    return render(request, 'reader/bstest.html')
