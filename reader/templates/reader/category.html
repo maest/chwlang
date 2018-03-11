@@ -1,3 +1,10 @@
+{% extends 'reader/base.html'%}
+
+{% block title %}
+{{ category.name }}
+{% endblock title %}
+
+{% block content %}
 {{ category.name }}
 <br>
 <br>
@@ -11,3 +18,5 @@
 {% else %}
     <p>No articles are available.</p>
 {% endif %}
+
+{% endblock content %}

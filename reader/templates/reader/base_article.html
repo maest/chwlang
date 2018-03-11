@@ -1,15 +1,18 @@
-{% extends 'reader/base.html' %}
+<!doctype html>
 {% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block title %}
-{{ article.headline }}
-{% endblock title %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'reader/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'reader/segment_holder.css' %}">
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'reader/segment_holder.css' %}">
-{% endblock css %}
-
-{% block content %}
+    <title>{{article.headline}}</title>
+  </head>
+  <body>
 	<h1>
         {% spaceless %}
     	{% for segment in segments_headline %}
@@ -32,14 +35,18 @@
 	    {% endif %}
 	{% endfor %}
     {% endspaceless %}
-{% endblock content %}
 
 
-{% block js %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="{% static 'reader/js/bootstrap.min.js' %}"></script>
     <!-- Enable all popovers -->
     <script>
     $(document).ready(function(){
         $('[data-toggle="popover"]').popover();
         });
     </script>
-{% endblock js %}
+  </body>
+</html>

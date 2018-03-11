@@ -112,4 +112,7 @@ def explain_dbdict(request, word):
     return render(request, 'reader/explain.html', context)
 
 def bstest(request):
-    return render(request, 'reader/bstest.html')
+    return render(request, 'reader/inherittest.html')
+
+def base(request):
+    return render(request, 'reader/base.html')

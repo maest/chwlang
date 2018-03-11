@@ -1,3 +1,10 @@
+{% extends 'reader/base.html' %}
+
+{% block title %}
+{{ word }}
+{% endblock title %}
+
+{% block content %}
 {% if entries %}
     <h2>{{ word }}</h2>
     <ul>
@@ -10,3 +17,4 @@
 {% else %}
     <p>No explanation is available.</p>
 {% endif %}
+{% endblock content %}
