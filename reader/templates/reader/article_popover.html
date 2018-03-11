@@ -12,9 +12,9 @@
 {% block content %}
 	<h1>
         {% spaceless %}
-    	{% for segment in segments_headline %}
-    	    {% if segment.english %}
-                <a tabindex="-1" class="segment-holder" data-toggle="popover" data-placement="bottom" data-html='true' data-trigger='focus' data-content="<h4>{{segment.segment}}</h4>{{segment.english|linebreaksbr}}">{{segment.segment|linebreaksbr}}</a>
+    	{% for idx,segment in segments_headline.iterrows %}
+    	    {% if segment.dict_entry %}
+                <a tabindex="-1" class="segment-holder" data-toggle="popover" data-placement="bottom" data-html='true' data-trigger='focus' data-content="{% include 'reader/explain_popover.html' with entries=segment.dict_entry word=segment.segment %}">{{segment.segment|linebreaksbr}}</a>
             {% else %}
                 <span>{{segment.segment|linebreaksbr}}</span>
     	    {% endif %}
@@ -24,12 +24,12 @@
 	<br>
 	<br>
     {% spaceless %}
-	{% for segment in segments_body %}
-	    {% if segment.english %}
-            <a tabindex="-1" class="segment-holder" data-toggle="popover" data-placement="bottom" data-html='true' data-trigger='focus' data-content="<h4>{{segment.segment}}</h4>{{segment.english|linebreaksbr}}">{{segment.segment|linebreaksbr}}</a>
+	{% for idx,segment in segments_body.iterrows %}
+    	{% if segment.dict_entry %}
+            <a tabindex="-1" class="segment-holder" data-toggle="popover" data-placement="bottom" data-html='true' data-trigger='focus' data-content="{% include 'reader/explain_popover.html' with entries=segment.dict_entry word=segment.segment %}">{{segment.segment|linebreaksbr}}</a>
         {% else %}
             <span>{{segment.segment|linebreaksbr}}</span>
-	    {% endif %}
+        {% endif %}
 	{% endfor %}
     {% endspaceless %}
 {% endblock content %}

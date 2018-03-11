@@ -9,6 +9,7 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('category/<category_name>/', views.category, name='category'),
     path('explain/<word>/', views.explain, name='explain'),
+    path('explain_popover/<word>/', views.explain_popover, name='explain_popover'),
     path('bstest', views.bstest, name='bstest'),
     path('base', views.base, name='base'),
 ]

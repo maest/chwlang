@@ -58,28 +58,26 @@ def article(request, article_id):
     d = Dictionary.d
     segments = jieba.lcut(article.headline)
     d = d[d['simplified'].isin(segments)]
-    d['engpinyin'] = d.apply(lambda x:'['+x['pinyin']+']'+'\n'+x['english'], axis=1)
-    d = d.groupby('simplified').agg({'engpinyin':'\n'.join})
+    DictionaryEntry = collections.namedtuple('Entry', 'pinyin translation')
+    d['dict_entry'] = d.apply(lambda x:DictionaryEntry(x['pinyin'], x['english']), axis=1)
+    d = d[['simplified', 'dict_entry']]
+    d = d.groupby('simplified').agg({'dict_entry':lambda x:list(x.values)})
     segments = pd.DataFrame(segments, columns=['segment'])
     segments = segments.join(d, on='segment')
     segments = segments.fillna(False)
-    segments_dicts = list(segments.T.to_dict().values())
-    Segment=collections.namedtuple('Segment', 'segment english')
-    segments = [Segment(s['segment'], s['engpinyin']) for s in segments_dicts]
     segments_headline = segments
 
     #body
     d = Dictionary.d
     segments = jieba.lcut(article.body)
     d = d[d['simplified'].isin(segments)]
-    d['engpinyin'] = d.apply(lambda x:'['+x['pinyin']+']'+'\n'+x['english'], axis=1)
-    d = d.groupby('simplified').agg({'engpinyin':'\n'.join})
+    DictionaryEntry = collections.namedtuple('Entry', 'pinyin translation')
+    d['dict_entry'] = d.apply(lambda x:DictionaryEntry(x['pinyin'], x['english']), axis=1)
+    d = d[['simplified', 'dict_entry']]
+    d = d.groupby('simplified').agg({'dict_entry':lambda x:list(x.values)})
     segments = pd.DataFrame(segments, columns=['segment'])
     segments = segments.join(d, on='segment')
     segments = segments.fillna(False)
-    segments_dicts = list(segments.T.to_dict().values())
-    Segment=collections.namedtuple('Segment', 'segment english')
-    segments = [Segment(s['segment'], s['engpinyin']) for s in segments_dicts]
     segments_body = segments
 
     context = {
@@ -102,6 +100,20 @@ def explain(request, word):
         'entries':de,
         }
     return render(request, 'reader/explain.html', context)
+
+def explain_popover(request, word):
+    DictionaryEntry = collections.namedtuple('Entry', 'pinyin translation')
+    d = Dictionary.d
+    d = d[d['simplified'] == word]
+    if d.empty:
+        raise Http404
+    de = d.apply(lambda r:DictionaryEntry(r['pinyin'], r['english']), axis=1)
+    de = de.tolist()
+    context = {
+        'word':word,
+        'entries':de,
+        }
+    return render(request, 'reader/explain_popover.html', context)
 
 def explain_dbdict(request, word):
     words = get_list_or_404(DictionaryEntry, word=word)
