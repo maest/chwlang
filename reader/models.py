@@ -81,7 +81,7 @@ def download_file_from_google_drive(id):
     return csv_text
 
 def download_file_from_filesystem():
-    filepath='C:/python projects/christina_website/chwlang/data/cedict/dictionary_df.csv'
+    filepath='/home/bogdan/projects/chwlang/chwlang/data/cedict/dictionary_df.csv'
     print('Reading dictionary csv from disk')
     with open(filepath, 'r', encoding='utf-8') as f:
         r = f.read()
