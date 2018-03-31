@@ -4,6 +4,9 @@ import pandas as pd
 import requests
 import os
 import uuid
+from pathlib import Path
+
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
