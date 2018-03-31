@@ -1,0 +1,90 @@
+url,category,include
+http://www.xinhuanet.com,Main,FALSE
+http://www.gd.xinhuanet.com,Guangdong (province),FALSE
+http://www.ah.xinhuanet.com,Anhui (province),FALSE
+http://www.xinhuanet.com/cankao,Reference News,FALSE
+http://www.yn.xinhuanet.com,Yunnan (province),FALSE
+http://www.fj.xinhuanet.com,Fujian (province),FALSE
+http://mrdx.xinhuanet.com,Xinhua Daily Telegraph,FALSE
+http://www.jx.xinhuanet.com,Jianxi (province),FALSE
+http://uav.xinhuanet.com,UAVs,FALSE
+http://www.xinhuanet.com/world,International,TRUE
+http://big5.xinhuanet.com,?,FALSE
+http://game.xinhuanet.com,Video Games,FALSE
+http://www.xinhuanet.com/cmzs.htm,,FALSE
+http://www.hn.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/whxw.htm,,FALSE
+http://nis.xinhuanet.com,,FALSE
+http://www.hb.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/science,Science,TRUE
+http://spanish.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/wzdt2014.htm,,FALSE
+http://www.sd.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/health,Healthcare,TRUE
+http://www.gs.xinhuanet.com,,FALSE
+http://www.js.xinhuanet.com,,FALSE
+http://www.he.xinhuanet.com,,FALSE
+http://www.nx.xinhuanet.com,,FALSE
+http://my.xinhuanet.com,,FALSE
+http://www.bj.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/foto,,FALSE
+http://www.xinhuanet.com/mil,Military,TRUE
+http://www.hq.xinhuanet.com,,FALSE
+http://chinesejournalist.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/politics,Politics,TRUE
+http://www.sx.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/finance,Finance,TRUE
+http://cx.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/air,,FALSE
+http://www.xinhuanet.com/xhsld,,FALSE
+http://www.xinhuanet.com/xhtp.htm,,FALSE
+http://www.xinhuanet.com/linktous.htm,,FALSE
+http://www.xinhuanet.com/home.htm,,FALSE
+http://us.xinhuanet.com,,FALSE
+http://jjckb.xinhuanet.com,,FALSE
+http://www.ln.xinhuanet.com,,FALSE
+http://bt.xinhuanet.com,,FALSE
+http://jp.xinhuanet.com,,FALSE
+http://www.cq.xinhuanet.com,,FALSE
+http://www.sh.xinhuanet.com,,FALSE
+http://kr.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/fortune,,FALSE
+http://german.xinhuanet.com,,FALSE
+http://www.nmg.xinhuanet.com,,FALSE
+http://korea.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/jsfw/index.html,,FALSE
+http://www.xinhuanet.com/local,,FALSE
+http://www.gx.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/english,,FALSE
+http://www.sn.xinhuanet.com,,FALSE
+http://herald.xinhuanet.com,,FALSE
+http://sg.xinhuanet.com,,FALSE
+http://lw.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/vr,,FALSE
+http://portuguese.xinhuanet.com,,FALSE
+http://paper.xinhuanet.com,,FALSE
+http://www.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/jiadian,,FALSE
+http://www.zj.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/xhjj.htm,,FALSE
+http://www.jl.xinhuanet.com,,FALSE
+http://www.ha.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/sports,Sports,TRUE
+http://sports.xinhuanet.com,,FALSE
+http://csj.xinhuanet.com,,FALSE
+http://www.sc.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/zhcs,,FALSE
+http://www.hlj.xinhuanet.com,,FALSE
+http://wx.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/culture,Culture,TRUE
+http://imgs.xinhuanet.com,,FALSE
+http://www.qh.xinhuanet.com,,FALSE
+http://www.xj.xinhuanet.com,,FALSE
+http://www.xinhuanet.ltd,,FALSE
+http://www.tj.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/expo,,FALSE
+http://www.xinhuanet.com/power,Energy,TRUE
+http://www.gz.xinhuanet.com,,FALSE
+http://xhgy.xinhuanet.com,,FALSE
+http://www.xinhuanet.com/lianzheng,,FALSE
+http://news.xinhuanet.com,,FALSE

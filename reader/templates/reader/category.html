@@ -10,7 +10,7 @@
 {% if associated_articles %}
     <ul>
     {% for article in associated_articles %}
-        <li><a href="/reader/{{ article.id }}/">{{ article.headline }}</a></li>
+        <li><a href={% url 'article' article.id %}>{{ article.headline }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

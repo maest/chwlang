@@ -32,6 +32,16 @@
         {% endif %}
 	{% endfor %}
     {% endspaceless %}
+    <div class='container'>
+        <p></p>
+        <p>Categories: 
+        {% for c in article.categories.all %}
+            <a href={% url 'category' c.name %}>{{ c.name }}</a>
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}
+        </p>
+        <p class="text-muted">Original source <a href='{{ article.url }}'>here</a></p>
+    </div>
 {% endblock content %}
 
 

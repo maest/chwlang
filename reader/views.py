@@ -53,7 +53,7 @@ def article_nopopover(request, article_id):
     return render(request, 'reader/article.html', context)
 
 def article(request, article_id):
-    article = get_object_or_404(Article, pk=article_id)
+    article = get_object_or_404(Article, id=article_id)
     #headline
     d = Dictionary.d
     segments = jieba.lcut(article.headline)
