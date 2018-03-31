@@ -3,6 +3,9 @@ from io import StringIO
 import pandas as pd
 import requests
 import os
+from pathlib import Path
+
+from django.conf import settings
 
 class Category(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
@@ -81,9 +84,9 @@ def download_file_from_google_drive(id):
     return csv_text
 
 def download_file_from_filesystem():
-    filepath='/home/bogdan/projects/chwlang/chwlang/data/cedict/dictionary_df.csv'
+    filepath=Path(settings.BASE_DIR)/'data/cedict/dictionary_df.csv'
     print('Reading dictionary csv from disk')
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(str(filepath), 'r', encoding='utf-8') as f:
         r = f.read()
     print('Done reading dictionary csv from disk')
     return r
