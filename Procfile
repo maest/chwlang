@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: ./release_task.sh
 web: gunicorn chwlang.wsgi
