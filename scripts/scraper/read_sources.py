@@ -1,4 +1,4 @@
-from scripts.scraper.read_sources_lib import build_xinhuanet_articles, build_163_articles, download_and_parse_articles, save_full_articles_to_db
+from scripts.scraper.read_sources_lib import build_xinhuanet_articles, build_163_articles, download_and_parse_articles
 import logging
 logging.basicConfig(level=logging.INFO)
 
