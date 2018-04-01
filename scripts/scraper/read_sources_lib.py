@@ -45,17 +45,24 @@ def build_163_articles():
 def download_and_parse_articles(articles):
     '''Returns a dataframe with columns url, categories, title, text
     '''
+    articles = select_articles_not_in_db(articles)
     articles = download_and_parse_articles_multiprocess(articles)
+    #articles = download_and_parse_articles_singlethread(articles)
     articles['text'] = articles['article'].apply(lambda x:x.text)
     articles['title'] = articles['article'].apply(lambda x:x.title)
     articles = articles[['url','categories','title','text']]
     return articles
 
+def select_articles_not_in_db(articles):
+    in_db = articles['url'].isin(Article.objects.values_list('url', flat=True))
+    logger.info('Dropped {} out of {} articles as they are already present in the db'.format(len(in_db[in_db]), len(in_db)))
+    return articles[~in_db]
+
 def download_and_parse_articles_multiprocess(articles):
     logger.info('Downloading {} articles'.format(len(articles)))
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-        future_to_url = {executor.submit(download_and_parse_article_single,
-                                         a.article): idx
+        future_to_url = {executor.submit(download_parse_save_article_single,
+                                         a.article, a.categories): idx
                          for idx, (_, a) in enumerate(articles.iterrows())}
         results = []
         for future in concurrent.futures.as_completed(future_to_url):
@@ -68,11 +75,27 @@ def download_and_parse_articles_multiprocess(articles):
 
 def download_and_parse_articles_singlethread(articles):
     logger.info('Downloading {} articles'.format(len(articles)))
-    for idx,a in enumerate(articles['article']):
-        logger.info('Doing {} out of {} articles'.format(1+idx, len(articles)))
-        download_and_parse_article_single(a)
+    for i,(_,a) in enumerate(articles.iterrows()):
+        logger.info('Doing {} out of {} articles'.format(1+i, len(articles)))
+        download_parse_save_article_single(a['article'], a['categories'])
     logger.info('Done downloading articles')
     return articles
+
+def download_parse_save_article_single(article, categories): 
+    article = download_and_parse_article_single(article)
+    save_article(article, categories)
+    return article
+
+def save_article(article, categories):
+    logger.info('Saving {}'.format(article.url))
+    a = Article(headline = article.title,
+                body = article.text,
+                url = article.url)
+    #save before adding categories, otherwise add fails
+    a.save()
+    cats = [Category.objects.get_or_create(name = c)[0] for c in categories]
+    a.categories.add(*cats)
+    a.save()
 
 def download_and_parse_article_single(article): 
     logger.info('Downloading {}'.format(article.url))
