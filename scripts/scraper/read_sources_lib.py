@@ -109,16 +109,3 @@ def match_category(url, categories):
        if url.startswith(c['url']):
            return c['category']
     return None
-
-def save_full_articles_to_db(full_articles):
-    '''full_articles is a dataframe with columns title, text, url, categories
-    '''
-    for i, a in full_articles.iterrows():
-        new_a = Article(headline = a['title'],
-                        body = a['text'],
-                        url = a['url'])
-        #save before adding categories, otherwise add fails
-        new_a.save()
-        cats = [Category.objects.get_or_create(name = c)[0] for c in a['categories']]
-        new_a.categories.add(*cats)
-        new_a.save()
