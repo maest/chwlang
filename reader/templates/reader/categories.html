@@ -7,7 +7,7 @@ Categories
 {% if all_categories %}
     <ul>
     {% for category in all_categories %}
-        <li><a href="/reader/category/{{ category.name }}/">{{ category.name }}</a></li>
+        <li><a href={% url 'category' category.name %}>{{ category.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
