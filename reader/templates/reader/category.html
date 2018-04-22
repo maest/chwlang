@@ -9,8 +9,14 @@
 
 {% if associated_articles %}
     <ul>
-    {% for article in associated_articles %}
-        <li><a href={% url 'article' article.id %}>{{ article.headline }}</a></li>
+    {% for d, articles in associated_articles.items %}
+        <li>Published: {{ d|default:'A long time ago...' }}
+        <ul>
+        {% for article in articles %}
+            <li><a href={% url 'article' article.id %}>{{ article.headline }}</a></li>
+        {% endfor %}
+        </ul>
+        </li>
     {% endfor %}
     </ul>
 {% else %}

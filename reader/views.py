@@ -27,9 +27,17 @@ def categories(request):
 def category(request, category_name):
     category = get_object_or_404(Category, pk=category_name)
     associated_articles = category.article_set.all()
+    #FIXME: is there a better way of grouping these rows up?
+    associated_articles = pd.DataFrame(list(associated_articles), columns=['article'])
+    associated_articles['publish_date'] = associated_articles['article'].apply(lambda x:x.publish_date)
+    associated_articles['publish_date'] = associated_articles['publish_date'].apply(lambda x:None if x is None else x.date())
+    associated_articles = associated_articles.sort_values('publish_date')
+    associated_articles['publish_date'] = associated_articles['publish_date'].astype(object).where(associated_articles['publish_date'].notnull(), None)
+    #FIXME: associated_articles['publish_date']==None will always be None, even for None rows...
+    associated_articles_m = {d:associated_articles[associated_articles['publish_date']==d]['article'] for d in associated_articles['publish_date'].unique()}
     context = {
         'category':category,
-        'associated_articles':associated_articles,
+        'associated_articles':associated_articles_m,
     }
     return render(request, 'reader/category.html', context)
 
