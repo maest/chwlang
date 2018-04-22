@@ -5,6 +5,7 @@ import sqlite3
 import concurrent.futures
 from pathlib import Path
 from reader.models import Article, Category
+from django.utils.timezone import make_aware
 
 from django.conf import settings
 
@@ -56,7 +57,7 @@ def download_and_parse_articles(articles):
 def select_articles_not_in_db(articles):
     in_db = articles['url'].isin(Article.objects.values_list('url', flat=True))
     logger.info('Dropped {} out of {} articles as they are already present in the db'.format(len(in_db[in_db]), len(in_db)))
-    return articles[~in_db]
+    return articles[~in_db].copy()
 
 def download_and_parse_articles_multiprocess(articles):
     logger.info('Downloading {} articles'.format(len(articles)))
@@ -83,6 +84,7 @@ def download_and_parse_articles_singlethread(articles):
 
 def download_parse_save_article_single(article, categories): 
     article = download_and_parse_article_single(article)
+    #FIXME do not do this in a multithreaded fashion as it might cause timing issues
     save_article(article, categories)
     return article
 
@@ -90,7 +92,8 @@ def save_article(article, categories):
     logger.info('Saving {}'.format(article.url))
     a = Article(headline = article.title,
                 body = article.text,
-                url = article.url)
+                url = article.url,
+                publish_date = make_aware(article.publish_date))
     #save before adding categories, otherwise add fails
     a.save()
     cats = [Category.objects.get_or_create(name = c)[0] for c in categories]

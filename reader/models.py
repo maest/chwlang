@@ -21,6 +21,7 @@ class Article(models.Model):
     url = models.CharField(max_length=500, primary_key=True)
     id = models.UUIDField(default=uuid.uuid4, editable=False)
     headline = models.CharField(max_length=500)
+    publish_date = models.DateTimeField(null=True)
     body = models.TextField()
     categories = models.ManyToManyField(Category)
 
