@@ -27,5 +27,5 @@ requests-file==1.4.3
 six==1.11.0
 tldextract==2.2.0
 typing==3.6.4
-urllib3==1.22
+urllib3==1.26.5
 whitenoise==3.3.1
